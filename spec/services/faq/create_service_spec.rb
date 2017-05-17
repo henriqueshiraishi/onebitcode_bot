@@ -3,7 +3,7 @@ require_relative './../../spec_helper.rb'
 describe FaqModule::CreateService do
   before do
     @company = create(:company)
-
+    
     @question = FFaker::Lorem.sentence
     @answer = FFaker::Lorem.sentence
     @hashtags = "#{FFaker::Lorem.word}, #{FFaker::Lorem.word}"
@@ -28,16 +28,16 @@ describe FaqModule::CreateService do
       @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
 
       response = @createService.call()
-      expect(Faq.last.question).to match(@question)
-      expect(Faq.last.answer).to match(@answer)
+      expect(Faq.last.question).to eq(@question)
+      expect(Faq.last.answer).to eq(@answer)
     end
 
     it "With valid params, hashtags are created" do
       @createService = FaqModule::CreateService.new({"question.original" => @question, "answer.original" => @answer, "hashtags.original" => @hashtags})
 
       response = @createService.call()
-      expect(@hashtags.split(/[\s,]+/).first).to match(Hashtag.first.name)
-      expect(@hashtags.split(/[\s,]+/).last).to match(Hashtag.last.name)
+      expect(@hashtags.split(/[\s,]+/).first).to eq(Hashtag.first.name)
+      expect(@hashtags.split(/[\s,]+/).last).to eq(Hashtag.last.name)
     end
   end
 end
